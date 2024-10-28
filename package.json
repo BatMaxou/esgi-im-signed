@@ -1,0 +1,20 @@
+{
+  "name": "esgi-im-signed",
+  "version": "1.0.0",
+  "description": "Auditable project showing multiple security issues.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BatMaxou/esgi-im-signed.git"
+  },
+  "author": "Batmaxou, Dvk42",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BatMaxou/esgi-im-signed/issues"
+  },
+  "homepage": "https://github.com/BatMaxou/esgi-im-signed#readme"
+}

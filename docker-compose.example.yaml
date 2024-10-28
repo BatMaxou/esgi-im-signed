@@ -1,0 +1,7 @@
+services:
+  db:
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: im_signed
+    ports:
+      - "3307:3306"
