@@ -1,13 +1,24 @@
 import { createServer } from "http";
+import { list } from "./routes/list.js";
 
-const server = createServer(async (request, response) => {  
-    response.end('Hello World !');
+const server = createServer(async (request, response) => {
+  let html = null;
+  let isNotFound = false;
 
-    return;
+  switch (request.url) {
+    case '/':
+      html = await list()
+      break;
+    case '/inscription':
+      // render form
+      break;
+    default:
+      // 404
+      break;
+  }
 
-    if (request.url === "...") {
-        // function of the route (routes folder)
-    }
+  response.writeHead(isNotFound ? 404 : 200, { "Content-Type": "text/html" });
+  response.end(html);
 });
 
 server.listen(8000, "localhost", () => {
