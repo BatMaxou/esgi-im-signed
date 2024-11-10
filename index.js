@@ -1,13 +1,24 @@
 import { createServer } from "http";
-import { list } from "./routes/list.js";
+import { getList, postList } from "./routes/list.js";
 
 const server = createServer(async (request, response) => {
   let html = null;
+  let redirectUrl = null;
   let isNotFound = false;
+  let isRedirection = false;
 
-  switch (request.url) {
+  const { url } = request;
+  const [rawUrl, query] = url.split('?');
+
+  switch (rawUrl) {
     case '/':
-      html = await list()
+      if (request.method === 'POST') {
+        redirectUrl = await postList(request, response);
+        isRedirection = true;
+      } else {
+        html = await getList(query);
+      }
+
       break;
     case '/inscription':
       // render form
@@ -17,7 +28,12 @@ const server = createServer(async (request, response) => {
       break;
   }
 
-  response.writeHead(isNotFound ? 404 : 200, { "Content-Type": "text/html" });
+  if (isRedirection && redirectUrl) {
+    response.writeHead(301, { "Location": redirectUrl });
+  } else {
+    response.writeHead(isNotFound ? 404 : 200, { "Content-Type": "text/html" });
+  }
+
   response.end(html);
 });
 

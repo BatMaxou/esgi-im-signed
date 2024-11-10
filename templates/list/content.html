@@ -1,7 +1,12 @@
 <main class="list">
     <h1 class="list__title">JeSuisInscrit</h1>
 
-    <input class="list__search" type="text" name="search" />
+    <form method="post">
+        <input class="list__search" type="text" name="searchTerm" />
+        <button class="list__search-button" type="submit">Rechercher</button>
+    </form>
+    
+    <p>Résultats pour {{searchTerm}}</p>
 
     <div class="list__cards">
         {{cards}}
