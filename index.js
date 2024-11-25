@@ -1,6 +1,6 @@
 import { createServer } from "http";
 import { getList, postList } from "./routes/list.js";
-import { getRegister } from "./routes/auth.js";
+import { getRegister, postRegister } from "./routes/auth.js";
 
 const server = createServer(async (request, response) => {
   let html = null;

@@ -1,13 +1,12 @@
 import { readFile } from "fs/promises";
 import { db } from "../db.js";
 import { getBody } from "../library/body.js";
+import moment from "moment";
 
 // allow to search with links (https://imsigned.com/?searchTerm=test)
 export const getList = async (rawQuery) => {
   const query = new URLSearchParams(rawQuery);
   const searchTerm = query.get("searchTerm");
-
-  // handle database call
 
   return await list(searchTerm);
 };
@@ -25,16 +24,15 @@ const list = async (searchTerm = null) => {
   const contentTemplate = (await readFile("./templates/list/content.html")).toString();
   const cardTemplate = (await readFile("./templates/list/card.html")).toString();
 
-  // Récupérer les données de la base de données
+  // Récupérer les utilisateurs de la base de données
   const users = await fetchUsersFromDatabase(searchTerm);
 
   // Générer les cartes dynamiquement en fonction des données de la base
   const cards = users.map(
     (user) =>
       cardTemplate
-        .replace("{{username}}", user.name)
-        .replace("{{color}}", "#d473d4") // Couleur par défaut, peut être personnalisée
-        .replace("{{registerDate}}", user.registerDate || "N/A") // Date d'inscription
+        .replace("{{username}}", user.username)
+        .replace("{{registerDate}}", user.createdAt || "N/A")
   );
 
   // Remplir le contenu de la page avec les résultats
@@ -53,7 +51,7 @@ const fetchUsersFromDatabase = (searchTerm) => {
     let params = [];
 
     if (searchTerm) {
-      sql += " WHERE name LIKE ? OR email LIKE ?";
+      sql += " WHERE username LIKE ? OR email LIKE ?";
       params = [`%${searchTerm}%`, `%${searchTerm}%`];
     }
 
@@ -63,11 +61,10 @@ const fetchUsersFromDatabase = (searchTerm) => {
         reject([]);
         return;
       }
-      // Mapper les résultats pour ajouter des informations comme une date d'inscription fictive
+      
       const users = results.map((user) => ({
-        name: user.name,
-        email: user.email,
-        registerDate: new Date().toLocaleDateString(), // Exemple : générez une date fictive
+        username: user.username,
+        createdAt: moment(user.createdAt).format("DD/MM/YYYY"),
       }));
       resolve(users);
     });

@@ -7,6 +7,7 @@ export const db = mysql.createConnection({
   user: "root",
   password: "root",
   database: "im_signed",
+  multipleStatements: true,
 });
 
 // Connexion à la base de données
@@ -21,8 +22,9 @@ db.connect((err) => {
   const createTableQuery = `
     CREATE TABLE IF NOT EXISTS users (
       id INT AUTO_INCREMENT PRIMARY KEY,
+      username VARCHAR(255) NOT NULL,
       email VARCHAR(255) NOT NULL UNIQUE,
-      name VARCHAR(255) NOT NULL
+      password VARCHAR(255) NOT NULL,
       createdAt DATETIME NOT NULL
     );
   `;
