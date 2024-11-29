@@ -1,6 +1,11 @@
 services:
   db:
     image: mariadb:10.3
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: im_signed
+    ports:
+      - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
 

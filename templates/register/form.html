@@ -1,10 +1,14 @@
 <main class="register">
-    <h1 class="register__title">Inscription</h1>
+  <h1 class="register__title">Inscription</h1>
 
-    <form class="register__form">
-        <input class="register__input" type="text" name="username" />
-        <input class="register__input" type="color" name="color" />
-
-        <p class="register__errors">{{errors}}</p>
-    </form>
+  <form class="register__form" method="POST">
+    <label for="username">Nom d'utilisateur</label>
+    <input class="register__input" id="username" type="text" name="username" />
+    <label for="email">Email</label>
+    <input class="register__input" id="email" type="text" name="email" />
+    <label for="password">Mot de passe</label>
+    <input class="register__input" id="password" type="password" name="password" />
+    <input type="submit" value="Soumettre" />
+    <p class="register__errors">{{errors}}</p>
+  </form>
 </main>
