@@ -1,6 +1,8 @@
 import { createServer } from "http";
 import { getList, postList } from "./routes/list.js";
-import { getRegister, postRegister } from "./routes/auth.js";
+import { getRegister, postRegister } from "./routes/register.js";
+import { getLogin, postLogin } from "./routes/login.js";
+import { readFile } from "fs/promises";
 
 const server = createServer(async (request, response) => {
   let html = null;
@@ -14,7 +16,7 @@ const server = createServer(async (request, response) => {
   switch (rawUrl) {
     case "/":
       if (request.method === "POST") {
-        redirectUrl = await postList(request, response);
+        redirectUrl = await postList(request);
         isRedirection = true;
       } else {
         html = await getList(query);
@@ -23,12 +25,37 @@ const server = createServer(async (request, response) => {
       break;
     case "/inscription":
       if (request.method === "POST") {
-        redirectUrl = await postRegister(request, response);
+        redirectUrl = await postRegister(request);
         isRedirection = true;
       } else {
-        html = await getRegister(query);
+        html = await getRegister();
       }
       break;
+    case "/login":
+      if (request.method === "POST") {
+        const token = await postLogin(request);
+        if (!token) {
+          response.writeHead(401);
+          response.end();
+
+          return;
+        }
+        
+        response.writeHead(200, {
+          "Content-Type": "application/json",
+        });
+        response.end(JSON.stringify({ token }));
+
+        return;
+      } else {
+        html = await getLogin();
+      }
+      break;
+    case "/js/login.js":
+      response.writeHead(200, { "Content-Type": "application/javascript" });
+      response.end(await readFile("./public/js/login.js"));
+
+      return;
     default:
       // 404
       break;
