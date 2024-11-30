@@ -1,7 +1,7 @@
 import { readFile } from "fs/promises";
 import { db } from "../db.js";
 
-export async function postRegister(request, response) {
+export async function postRegister(request) {
   return new Promise((resolve, reject) => {
     let body = "";
 
@@ -33,7 +33,7 @@ export async function postRegister(request, response) {
   });
 }
 
-export const getRegister = async (rawQuery) => {
+export const getRegister = async () => {
   const errors = "";
   return await auth(errors);
 };
