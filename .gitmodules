@@ -1,0 +1,3 @@
+[submodule ".xsstrike"]
+	path = .xsstrike
+	url = git@github.com:s0md3v/XSStrike.git

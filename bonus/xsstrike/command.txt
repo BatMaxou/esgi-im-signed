@@ -1,0 +1,2 @@
+// XSStrike (clone git@github.com:s0md3v/XSStrike.git)
+python3 ./.xsstrike/xsstrike.py -u "http://localhost:8000?searchTerm=query"
