@@ -1,0 +1,10 @@
+POST /login HTTP/1.1
+Accept: */*
+Connection: keep-alive
+Content-Length: 37
+Content-Type: application/json
+Host: localhost:8000
+Origin: http://localhost:8000
+Referer: http://localhost:8000/login
+
+{"email":"test@test.com","password":"azertyui"}

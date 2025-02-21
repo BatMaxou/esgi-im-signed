@@ -1,0 +1,1 @@
+docker run -v $(pwd):/zap/wrk/:rw --network="host" zaproxy/zap-stable zap-baseline.py -t http://localhost:8000 -r ./bonus/zap/zap-report.html
